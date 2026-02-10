@@ -1,0 +1,81 @@
+cabal-version:      3.0
+name:               gcode
+version:            0.1.0.0
+synopsis:           Comprehensive G-code parsing, rendering, and construction library
+description:
+  The canonical Haskell library for working with G-code: parsing,
+  rendering, constructing, and validating CNC machine control programs.
+  Supports all standard G/M commands, arbitrary parameters, comments,
+  line numbers, checksums, and vendor extensions.
+license:            BSD-3-Clause
+license-file:       LICENSE
+author:             Doug Beardsley
+maintainer:         doug@equitek.ai
+copyright:          2026 Doug Beardsley
+category:           Manufacturing, Parsing
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+extra-source-files: test-data/*.gcode
+
+common shared
+  default-language: Haskell2010
+  ghc-options:      -Wall -Werror -Wno-missing-home-modules -O2
+  build-depends:
+    aeson,
+    base >= 4.16 && < 5,
+    bytestring,
+    containers,
+    deepseq,
+    lens,
+    megaparsec,
+    mtl,
+    text,
+    vector
+
+library
+  import:           shared
+  exposed-modules:
+    GCode.Types
+    GCode.Types.Block
+    GCode.Types.Command
+    GCode.Types.Parameter
+    GCode.Types.Program
+    GCode.Types.Units
+    GCode.Build
+    GCode.Checksum
+    GCode.Parse
+    GCode.Render
+    GCode.Validate
+    Utils
+  hs-source-dirs:   src
+
+executable gcode-examples
+  import:           shared
+  main-is:          Main.hs
+  hs-source-dirs:   exe
+  ghc-options:      -threaded -rtsopts
+  build-depends:
+    gcode,
+    optparse-applicative
+
+test-suite tests
+  import:           shared
+  main-is:          TestMain.hs
+  type:             exitcode-stdio-1.0
+  hs-source-dirs:   test
+  ghc-options:      -threaded -rtsopts
+  build-depends:
+    gcode,
+    fake,
+    hspec,
+    hspec-golden,
+    QuickCheck,
+    random
+  other-modules:
+    CommandSpec
+    ParseSpec
+    RenderSpec
+    BuildSpec
+    ValidateSpec
+    ChecksumSpec
+    RoundTripSpec
