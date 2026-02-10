@@ -14,15 +14,15 @@ jobs:
 
       - uses: haskell-actions/setup@v2
         with:
-          ghc-version: '9.8.4'
+          ghc-version: '9.10.3'
 
       - name: Cache cabal store
         uses: actions/cache@v4
         with:
           path: ~/.cabal/store
-          key: ${{ runner.os }}-ghc-9.8.4-${{ hashFiles('gcode.cabal') }}
+          key: ${{ runner.os }}-ghc-9.10.3-${{ hashFiles('gcode.cabal') }}
           restore-keys: |
-            ${{ runner.os }}-ghc-9.8.4-
+            ${{ runner.os }}-ghc-9.10.3-
 
       - name: Install dependencies
         run: cabal update && cabal build --only-dependencies --enable-tests
