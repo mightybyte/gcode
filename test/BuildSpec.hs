@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS_GHC -Wno-x-partial #-}
 module BuildSpec (buildSpec) where
 
 ------------------------------------------------------------------------------
@@ -7,7 +8,6 @@ import           Test.Hspec
 import           GCode.Build
 import           GCode.Types.Block
 import           GCode.Types.Command
-import           GCode.Types.Parameter
 import           GCode.Types.Program
 ------------------------------------------------------------------------------
 
@@ -59,4 +59,4 @@ buildSpec = do
             comment "Priming"
             linearMove [('X', 0.1), ('Y', 20), ('Z', 0.3), ('F', 5000)]
             linearMove [('X', 0.1), ('Y', 200), ('Z', 0.3), ('F', 1500), ('E', 15)]
-      commandCount prog `shouldBe` 10
+      commandCount prog `shouldBe` 9

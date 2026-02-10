@@ -7,7 +7,6 @@ module GCode.Types.Parameter where
 ------------------------------------------------------------------------------
 import           Control.DeepSeq (NFData)
 import           Data.Data
-import           Data.Text (Text)
 import qualified Data.Text as T
 import           GHC.Generics
 ------------------------------------------------------------------------------

@@ -34,7 +34,7 @@ parseProgram
 parseProgram input =
   case parse programParser "gcode" input of
     Left err -> Left err
-    Right blocks -> Right $ programFromBlocks blocks
+    Right blocks -> Right $ programFromBlocks (filter (not . isEmptyBlock) blocks)
 
 -- | Parse a single line of G-code.
 parseBlock
@@ -55,14 +55,7 @@ parseBlocksLazy input = map parseBlock (T.lines input)
 
 programParser
   :: Parser [Block]
-programParser = many blockLineParser <* eof
-
-blockLineParser
-  :: Parser Block
-blockLineParser = do
-  b <- blockParser
-  void (optional newline)
-  pure b
+programParser = blockParser `sepEndBy` newline <* eof
 
 blockParser
   :: Parser Block
@@ -73,14 +66,17 @@ blockParser = do
   cmd <- optional commandParser
   hspace
   ps <- many (paramParser <* hspace)
-  cmt <- optional commentParser
+  cmt1 <- optional commentParser
   cs <- optional checksumParser
+  hspace
+  cmt2 <- optional commentParser
+  let cmt = cmt2 <|> cmt1
   pure $ Block ln cmd ps cmt cs
 
 lineNumberParser
   :: Parser Int
 lineNumberParser = do
-  _ <- char' 'N'
+  _ <- ciChar 'N'
   n <- L.decimal
   pure n
 
@@ -91,21 +87,21 @@ commandParser = gCommandParser <|> mCommandParser <|> tCommandParser
 gCommandParser
   :: Parser Command
 gCommandParser = do
-  _ <- char' 'G'
+  _ <- ciChar 'G'
   n <- L.decimal
   pure $ GCmd $ gCommandFromCode n
 
 mCommandParser
   :: Parser Command
 mCommandParser = do
-  _ <- char' 'M'
+  _ <- ciChar 'M'
   n <- L.decimal
   pure $ MCmd $ mCommandFromCode n
 
 tCommandParser
   :: Parser Command
 tCommandParser = do
-  _ <- char' 'T'
+  _ <- ciChar 'T'
   n <- L.decimal
   pure $ TCmd n
 
@@ -123,8 +119,11 @@ isParamLetter c = isAlpha c && toUpper c `notElem` ['G', 'M', 'N', 'T']
 
 signedNumber
   :: Parser Double
-signedNumber = L.signed (pure ()) L.float
-  <|> (fromIntegral <$> L.signed (pure ()) (L.decimal :: Parser Int))
+signedNumber = do
+  hspace
+  sign <- option 1 (char '-' *> pure (-1) <|> char '+' *> pure 1)
+  val <- try L.float <|> (fromIntegral <$> (L.decimal :: Parser Int))
+  pure (sign * val)
 
 commentParser
   :: Parser Text
@@ -153,10 +152,17 @@ checksumParser = do
   L.decimal
 
 -- | Case-insensitive single character match.
-char'
+ciChar
   :: Char
   -> Parser Char
-char' c = char c <|> char (toUpper c)
+ciChar c =
+  let u = toUpper c
+      l = toLower c
+  in char u <|> char l
+  where
+    toLower ch
+      | ch >= 'A' && ch <= 'Z' = toEnum (fromEnum ch + 32)
+      | otherwise = ch
 
 ------------------------------------------------------------------------------
 -- Sticky command resolution

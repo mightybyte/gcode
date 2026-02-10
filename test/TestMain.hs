@@ -11,6 +11,9 @@ import           BuildSpec
 import           ValidateSpec
 import           ChecksumSpec
 import           RoundTripSpec
+import           PortedParseSpec
+import           PortedRenderSpec
+import           SmokeSpec
 ------------------------------------------------------------------------------
 
 main :: IO ()
@@ -24,3 +27,6 @@ main = do
     describe "ValidateSpec" validateSpec
     describe "ChecksumSpec" checksumSpec
     describe "RoundTripSpec" roundTripSpec
+    describe "PortedParseSpec" portedParseSpec
+    describe "PortedRenderSpec" portedRenderSpec
+    describe "SmokeSpec" smokeSpec

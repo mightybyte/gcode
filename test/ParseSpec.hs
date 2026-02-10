@@ -8,6 +8,7 @@ import           GCode.Parse
 import           GCode.Types.Block
 import           GCode.Types.Command
 import           GCode.Types.Parameter
+import           GCode.Types.Program
 ------------------------------------------------------------------------------
 
 parseSpec :: Spec

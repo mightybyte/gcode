@@ -8,7 +8,6 @@ module GCode.Types.Units where
 import           Control.DeepSeq (NFData)
 import           Data.Aeson
 import           Data.Data
-import qualified Data.Text as T
 import           GHC.Generics
 ------------------------------------------------------------------------------
 import           Utils

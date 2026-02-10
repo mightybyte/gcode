@@ -6,6 +6,7 @@ import           Test.Hspec
 ------------------------------------------------------------------------------
 import           GCode.Build
 import           GCode.Checksum
+import           GCode.Types.Block
 import           GCode.Types.Program
 ------------------------------------------------------------------------------
 

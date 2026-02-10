@@ -2,7 +2,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
 module GCode.Render
   ( -- * Configuration
     RenderConfig(..)
@@ -20,11 +19,10 @@ module GCode.Render
 
 ------------------------------------------------------------------------------
 import           Control.DeepSeq (NFData)
-import           Control.Lens (makeLenses)
 import           Data.Data
 import           Data.Text (Text)
 import qualified Data.Text as T
-import           GHC.Generics
+import           GHC.Generics hiding (prec)
 ------------------------------------------------------------------------------
 import           GCode.Checksum (computeChecksum)
 import           GCode.Types.Block
@@ -55,8 +53,6 @@ data RenderConfig = RenderConfig
   , _renderConfig_commentStyle :: CommentStyle
   -- ^ Comment style to use
   } deriving (Eq, Show, Read, Generic, Data)
-
-makeLenses ''RenderConfig
 
 instance NFData RenderConfig
 

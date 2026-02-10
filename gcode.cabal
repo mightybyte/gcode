@@ -63,7 +63,7 @@ test-suite tests
   main-is:          TestMain.hs
   type:             exitcode-stdio-1.0
   hs-source-dirs:   test
-  ghc-options:      -threaded -rtsopts
+  ghc-options:      -threaded -rtsopts -Wno-incomplete-uni-patterns
   build-depends:
     gcode,
     fake,
@@ -79,3 +79,6 @@ test-suite tests
     ValidateSpec
     ChecksumSpec
     RoundTripSpec
+    PortedParseSpec
+    PortedRenderSpec
+    SmokeSpec

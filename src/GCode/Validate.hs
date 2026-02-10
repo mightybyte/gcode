@@ -1,7 +1,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE TemplateHaskell #-}
 module GCode.Validate
   ( -- * Warnings
     Warning(..)
@@ -13,9 +12,7 @@ module GCode.Validate
   ) where
 
 ------------------------------------------------------------------------------
-import           Control.Lens (makeLenses)
 import           Data.Maybe (mapMaybe)
-import           Data.Text (Text)
 import qualified Data.Text as T
 import           GHC.Generics
 ------------------------------------------------------------------------------
@@ -36,7 +33,7 @@ data BoundingBox = BoundingBox
   , _boundingBox_maxZ :: Double
   } deriving (Eq, Show, Read, Generic)
 
-makeLenses ''BoundingBox
+-- makeLenses ''BoundingBox
 
 -- | A 3D position for reporting out-of-bounds moves.
 data Position = Position
@@ -45,7 +42,7 @@ data Position = Position
   , _position_z :: Double
   } deriving (Eq, Show, Read, Generic)
 
-makeLenses ''Position
+-- makeLenses ''Position
 
 -- | Validation warnings.
 data Warning

@@ -10,8 +10,7 @@ import           Control.DeepSeq (NFData)
 import           Data.Aeson
 import           Data.Data
 import qualified Data.Text as T
-import           Data.Text (Text)
-import           GHC.Generics
+import           GHC.Generics hiding (M1)
 ------------------------------------------------------------------------------
 import           Utils
 ------------------------------------------------------------------------------
