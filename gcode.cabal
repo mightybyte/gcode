@@ -3,14 +3,14 @@ name:               gcode
 version:            0.1.0.0
 synopsis:           Comprehensive G-code parsing, rendering, and construction library
 description:
-  The canonical Haskell library for working with G-code: parsing,
-  rendering, constructing, and validating CNC machine control programs.
-  Supports all standard G/M commands, arbitrary parameters, comments,
-  line numbers, checksums, and vendor extensions.
+  Haskell library for working with G-code: parsing, rendering, constructing,
+  and validating CNC machine control programs.  Supports all standard G/M
+  commands, arbitrary parameters, comments, line numbers, checksums, and vendor
+  extensions.
 license:            BSD-3-Clause
 license-file:       LICENSE
 author:             Doug Beardsley
-maintainer:         doug@equitek.ai
+maintainer:         mightybyte@gmail.com
 copyright:          2026 Doug Beardsley
 category:           Manufacturing, Parsing
 build-type:         Simple
