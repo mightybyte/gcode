@@ -10,8 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        ghc: ['9.10.3', '9.12.3']
+        ghc: ['9.10.3', '9.12.2']
     name: GHC ${{ matrix.ghc }}
     steps:
       - uses: actions/checkout@v4
