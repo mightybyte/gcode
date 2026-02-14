@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code when working with code in this repository.
 
+## Git Policy
+
+- **No force pushes. Ever.** Git history is immutable, append-only.
+- No `--force`, no `--force-with-lease`, no `--amend` on already-pushed commits.
+- If a commit has a mistake, fix it in a new commit. Revert if needed, but never rewrite history.
+
 ## Project Overview
 
 `gcode` is a pure Haskell library for parsing, rendering, constructing, and validating G-code — the standard language for CNC machine control. It aims to be the canonical, highest-quality G-code library in the Haskell ecosystem.
